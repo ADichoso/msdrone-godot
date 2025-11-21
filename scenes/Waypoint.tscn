@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://gjmecnvwa8r5"]
+
+[ext_resource type="Script" uid="uid://cys587ab2e5gc" path="res://scenes/waypoint.gd" id="1_om3bq"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_h7nl1"]
+radius = 0.063
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h7nl1"]
+albedo_color = Color(0.88229835, 0.55818903, 0.4751584, 1)
+emission_enabled = true
+emission = Color(0.8928349, 0.36945534, 0.551436, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_om3bq"]
+material = SubResource("StandardMaterial3D_h7nl1")
+radius = 0.063
+height = 0.125
+
+[node name="Waypoint" type="PathFollow3D" groups=["Waypoints"]]
+script = ExtResource("1_om3bq")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_h7nl1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D/CollisionShape3D"]
+mesh = SubResource("SphereMesh_om3bq")
+skeleton = NodePath("../../..")
+
+[connection signal="input_event" from="Area3D" to="." method="_on_area_3d_input_event"]

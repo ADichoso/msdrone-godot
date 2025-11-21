@@ -7,10 +7,11 @@
 radius = 0.5753299
 
 [node name="Drone_CB" type="CharacterBody3D"]
-transform = Transform3D(0.59762514, 0, -0.80177563, 0, 1, 0, 0.80177563, 0, 0.59762514, 0, 0, 0)
+transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 0, 0)
 script = ExtResource("1_v0w56")
 MOVEMENT_SPEED = 2.5
 ELEVATION_SPEED = 0.5
+PRESET_PATHS_MODE = true
 
 [node name="Drone_Mesh" parent="." instance=ExtResource("2_v0w56")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
@@ -22,7 +23,7 @@ shape = SubResource("SphereShape3D_sugp2")
 top_level = true
 
 [node name="Target" type="Node3D" parent="Camera_Controller"]
-transform = Transform3D(1, 0, 0, 0, 0.9659258, 0.25881904, 0, -0.25881904, 0.9659258, 0, -0.063, -0.247)
+transform = Transform3D(1, 0, 0, 0, 0.9887563, 0.14953533, 0, -0.14953533, 0.9887563, 0, -0.063, -0.247)
 
 [node name="Camera3D" type="Camera3D" parent="Camera_Controller/Target"]
 transform = Transform3D(1, 0, 0, 0, 1.0000001, 0, 0, 0, 1.0000001, 0, 0, 0)

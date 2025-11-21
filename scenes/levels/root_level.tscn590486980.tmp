@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c347f64scck6e"]
+[gd_scene load_steps=10 format=3 uid="uid://c347f64scck6e"]
 
 [ext_resource type="PackedScene" uid="uid://cin0ld53v2pel" path="res://scenes/Drone/drone_cb.tscn" id="1_5bocx"]
 [ext_resource type="Environment" uid="uid://ckhjjjq86fqvg" path="res://resources/root_level_world_env.tres" id="1_bjr41"]
@@ -21,13 +21,15 @@ _data = {
 }
 point_count = 3
 
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_g2hoa"]
+
 [node name="RootLevel" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("1_bjr41")
 
 [node name="Floor_SB" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.7650141, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4579233, 0)
 metadata/_edit_group_ = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Floor_SB"]
@@ -66,6 +68,9 @@ loop = false
 
 [node name="Drone_CB" parent="Path3D/DroneFollow3D" instance=ExtResource("1_5bocx")]
 transform = Transform3D(0.99953324, 0, 0.030811233, 0, 1, 0, -0.030811233, 0, 0.99953324, 0, -0.49843764, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Path3D/DroneFollow3D"]
+mesh = SubResource("CapsuleMesh_g2hoa")
 
 [node name="Waypoint3" parent="Path3D" instance=ExtResource("4_ia20a")]
 transform = Transform3D(0.5327285, 0, -0.84627116, 0, 1, 0, 0.84627116, 0, 0.5327285, 1.6350001, 0, -4.0449996)
