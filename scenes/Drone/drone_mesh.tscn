@@ -1,0 +1,67 @@
+[gd_scene load_steps=3 format=3 uid="uid://bft3r4pbwxjj6"]
+
+[ext_resource type="PackedScene" uid="uid://3do3agwbly7r" path="res://assets/Drone.fbx" id="1_e6pei"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kvymy"]
+albedo_color = Color(0.2617403, 0.24052122, 0.22535875, 1)
+metallic = 0.29
+roughness = 0.25
+
+[node name="Drone" instance=ExtResource("1_e6pei")]
+
+[node name="Cube_001" parent="Drone" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_kvymy")
+
+[node name="Cube_011" parent="Drone" index="1"]
+surface_material_override/0 = SubResource("StandardMaterial3D_kvymy")
+
+[node name="Cylinder_001" parent="Drone" index="2"]
+surface_material_override/0 = SubResource("StandardMaterial3D_kvymy")
+
+[node name="Cylinder_003" parent="Drone" index="3"]
+surface_material_override/0 = SubResource("StandardMaterial3D_kvymy")
+
+[node name="Cylinder_004" parent="Drone" index="4"]
+surface_material_override/0 = SubResource("StandardMaterial3D_kvymy")
+
+[node name="Cylinder_008" parent="Drone" index="5"]
+surface_material_override/0 = SubResource("StandardMaterial3D_kvymy")
+
+[node name="Cylinder_009" parent="Drone" index="6"]
+surface_material_override/0 = SubResource("StandardMaterial3D_kvymy")
+
+[node name="Cylinder_010" parent="Drone" index="7"]
+surface_material_override/0 = SubResource("StandardMaterial3D_kvymy")
+
+[node name="Cube_021" parent="Drone" index="8"]
+surface_material_override/0 = SubResource("StandardMaterial3D_kvymy")
+
+[node name="Cube_025" parent="Drone" index="9"]
+surface_material_override/0 = SubResource("StandardMaterial3D_kvymy")
+
+[node name="Cylinder_002" parent="Drone" index="10"]
+surface_material_override/0 = SubResource("StandardMaterial3D_kvymy")
+
+[node name="Cylinder_005" parent="Drone" index="11"]
+surface_material_override/0 = SubResource("StandardMaterial3D_kvymy")
+
+[node name="Cylinder_006" parent="Drone" index="12"]
+surface_material_override/0 = SubResource("StandardMaterial3D_kvymy")
+
+[node name="Cube_022" parent="Drone" index="13"]
+surface_material_override/0 = SubResource("StandardMaterial3D_kvymy")
+
+[node name="Cube_023" parent="Drone" index="14"]
+surface_material_override/0 = SubResource("StandardMaterial3D_kvymy")
+
+[node name="Cylinder_020" parent="Drone" index="15"]
+surface_material_override/0 = SubResource("StandardMaterial3D_kvymy")
+
+[node name="Cylinder_021" parent="Drone" index="16"]
+surface_material_override/0 = SubResource("StandardMaterial3D_kvymy")
+
+[node name="Cylinder_022" parent="Drone" index="17"]
+surface_material_override/0 = SubResource("StandardMaterial3D_kvymy")
+
+[node name="Cylinder_023" parent="Drone" index="18"]
+surface_material_override/0 = SubResource("StandardMaterial3D_kvymy")

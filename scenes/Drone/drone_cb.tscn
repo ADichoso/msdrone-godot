@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://cin0ld53v2pel"]
+
+[ext_resource type="Script" uid="uid://yovbe62fbtt" path="res://scripts/drone_cb3d.gd" id="1_v0w56"]
+[ext_resource type="PackedScene" uid="uid://bft3r4pbwxjj6" path="res://scenes/Drone/drone_mesh.tscn" id="2_v0w56"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_sugp2"]
+radius = 0.5753299
+
+[node name="Drone_CB" type="CharacterBody3D"]
+transform = Transform3D(0.59762514, 0, -0.80177563, 0, 1, 0, 0.80177563, 0, 0.59762514, 0, 0, 0)
+script = ExtResource("1_v0w56")
+MOVEMENT_SPEED = 2.5
+ELEVATION_SPEED = 0.5
+
+[node name="Drone_Mesh" parent="." instance=ExtResource("2_v0w56")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_sugp2")
+
+[node name="Camera_Controller" type="Node3D" parent="."]
+top_level = true
+
+[node name="Target" type="Node3D" parent="Camera_Controller"]
+transform = Transform3D(1, 0, 0, 0, 0.9659258, 0.25881904, 0, -0.25881904, 0.9659258, 0, -0.063, -0.247)
+
+[node name="Camera3D" type="Camera3D" parent="Camera_Controller/Target"]
+transform = Transform3D(1, 0, 0, 0, 1.0000001, 0, 0, 0, 1.0000001, 0, 0, 0)

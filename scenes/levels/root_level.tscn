@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=3 uid="uid://c347f64scck6e"]
+
+[ext_resource type="PackedScene" uid="uid://cin0ld53v2pel" path="res://scenes/Drone/drone_cb.tscn" id="1_5bocx"]
+[ext_resource type="Environment" uid="uid://ckhjjjq86fqvg" path="res://resources/root_level_world_env.tres" id="1_bjr41"]
+[ext_resource type="Material" uid="uid://na7e0kr2q7ow" path="res://resources/materials/floor_mat3d.tres" id="2_ujr3r"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_docf2"]
+material = ExtResource("2_ujr3r")
+size = Vector3(10, 0.2, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_imdew"]
+size = Vector3(10, 0.2, 10)
+
+[node name="RootLevel" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("1_bjr41")
+
+[node name="Drone_CB" parent="." instance=ExtResource("1_5bocx")]
+transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 0, 0)
+
+[node name="PersonCamera" type="Camera3D" parent="."]
+transform = Transform3D(0.99405634, 0.053608634, -0.09475291, 0, 0.87035567, 0.49242365, 0.108866885, -0.4894969, 0.8651825, -0.00081413984, 1.5030177, 3.013518)
+
+[node name="Floor_SB" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4579233, 0)
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor_SB"]
+mesh = SubResource("BoxMesh_docf2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor_SB"]
+shape = SubResource("BoxShape3D_imdew")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.8148649, 0.579651, 0, -0.579651, 0.8148649, 0, 2.4148521, 5.306818)
+light_color = Color(1, 1, 0.89411765, 1)
+shadow_enabled = true
