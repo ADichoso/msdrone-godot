@@ -6,9 +6,38 @@ extends CharacterBody3D
 @export var ELEVATION_SPEED = 5.0
 @export var PRESET_PATHS_MODE : bool = false
 
+var DronePathFollow: PathFollow3D
+var Paths: Path3D
+var PresetPathUIControls: Control
 func _ready() -> void:
 	$Camera_Controller.position = position
 	$Camera_Controller.rotation = rotation
+	
+	var UIController = get_tree().get_first_node_in_group("UIController")
+	UIController.toggle_drone_mode.connect(toggle_drone_mode)
+	
+	DronePathFollow = get_tree().get_first_node_in_group("DronePath")
+	Paths = get_tree().get_first_node_in_group("Paths")
+	PresetPathUIControls = get_tree().get_first_node_in_group("PresetPathControls")
+	
+	toggle_drone_mode(PRESET_PATHS_MODE)
+
+func toggle_drone_mode(mode: bool) -> void:
+	PRESET_PATHS_MODE = mode
+	
+	if PRESET_PATHS_MODE:
+		#Parent the Drone to the drone path and move the drone to that position
+		self.position = DronePathFollow.position
+		self.rotation = DronePathFollow.rotation
+		self.reparent(DronePathFollow, true)
+	else:
+		#Remove the parent of the drone back to the root
+		self.reparent(get_tree().current_scene)
+	
+	#Toggle the paths
+	Paths.visible = mode
+	PresetPathUIControls.visible = mode
+	$Camera_Controller.top_level = !mode
 
 '''
 DRONE CONTROL METHOD:
@@ -24,12 +53,11 @@ func _physics_process(_delta: float) -> void:
 	
 	# Drone Turning
 	var turn_direction := input_left_stick.x
+	print(turn_direction)
 	if turn_direction:
 		rotate_y(turn_direction * TURN_SPEED)
-			
-	if PRESET_PATHS_MODE:
-		$Camera_Controller.top_level = false
-	else:
+
+	if not PRESET_PATHS_MODE:
 		get_elevation_input(input_left_stick.y)
 		get_movement_input()
 		move_and_slide()

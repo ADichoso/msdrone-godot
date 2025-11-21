@@ -1,10 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://c347f64scck6e"]
+[gd_scene load_steps=12 format=3 uid="uid://c347f64scck6e"]
 
 [ext_resource type="PackedScene" uid="uid://cin0ld53v2pel" path="res://scenes/Drone/drone_cb.tscn" id="1_5bocx"]
 [ext_resource type="Environment" uid="uid://ckhjjjq86fqvg" path="res://resources/root_level_world_env.tres" id="1_bjr41"]
 [ext_resource type="Material" uid="uid://na7e0kr2q7ow" path="res://resources/materials/floor_mat3d.tres" id="2_ujr3r"]
 [ext_resource type="PackedScene" uid="uid://bf01uurk2v7er" path="res://scenes/drone_follow_3d.tscn" id="4_g2hoa"]
 [ext_resource type="PackedScene" uid="uid://gjmecnvwa8r5" path="res://scenes/Waypoint.tscn" id="4_ia20a"]
+[ext_resource type="Script" uid="uid://chb8rehhntyjc" path="res://scenes/levels/ui_controller.gd" id="6_f6xvp"]
+[ext_resource type="Script" uid="uid://br4yfwnru04fx" path="res://scenes/levels/preset_paths_controls.gd" id="7_008bx"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_docf2"]
 material = ExtResource("2_ujr3r")
@@ -21,7 +23,14 @@ _data = {
 }
 point_count = 3
 
+[sub_resource type="LabelSettings" id="LabelSettings_f6xvp"]
+font_size = 32
+
 [node name="RootLevel" type="Node3D"]
+
+[node name="Drone_CB" parent="." instance=ExtResource("1_5bocx")]
+transform = Transform3D(0.999996, 0, -1.8626451e-09, 0, 1, 0, 1.8626451e-09, 0, 0.999996, 0, 0, 0)
+PRESET_PATHS_MODE = false
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("1_bjr41")
@@ -41,7 +50,7 @@ transform = Transform3D(1, 0, 0, 0, 0.8148649, 0.579651, 0, -0.579651, 0.8148649
 light_color = Color(1, 1, 0.89411765, 1)
 shadow_enabled = true
 
-[node name="Path3D" type="Path3D" parent="."]
+[node name="Path3D" type="Path3D" parent="." groups=["Paths"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.49843764, 0)
 curve = SubResource("Curve3D_ia20a")
 debug_custom_color = Color(0.70376736, 0.61564976, 0.9779205, 1)
@@ -60,12 +69,9 @@ path_continuous_u = true
 path_u_distance = 1.0
 path_joined = false
 
-[node name="DroneFollow3D" parent="Path3D" instance=ExtResource("4_g2hoa")]
+[node name="DroneFollow3D" parent="Path3D" groups=["DronePath"] instance=ExtResource("4_g2hoa")]
 transform = Transform3D(0.9995132, 0, -0.030810619, 0, 1, 0, 0.030810619, 0, 0.9995132, 0, 0, 0)
 loop = false
-
-[node name="Drone_CB" parent="Path3D/DroneFollow3D" instance=ExtResource("1_5bocx")]
-transform = Transform3D(0.99953324, 0, 0.030811233, 0, 1, 0, -0.030811233, 0, 0.99953324, 0, -0.49843764, 0)
 
 [node name="Waypoint3" parent="Path3D" instance=ExtResource("4_ia20a")]
 transform = Transform3D(0.5327285, 0, -0.84627116, 0, 1, 0, 0.84627116, 0, 0.5327285, 1.6350001, 0, -4.0449996)
@@ -80,3 +86,127 @@ loop = false
 [node name="Waypoint" parent="Path3D" instance=ExtResource("4_ia20a")]
 transform = Transform3D(0.9995229, 0, -0.030810919, 0, 1, 0, 0.030810919, 0, 0.9995229, 0, 0, 0)
 loop = false
+
+[node name="UI_Controller" type="Control" parent="." groups=["UIController"]]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("6_f6xvp")
+
+[node name="MainMenuButton" type="Button" parent="UI_Controller"]
+layout_mode = 0
+offset_left = -569.0
+offset_top = -315.0
+offset_right = -469.0
+offset_bottom = -284.0
+text = "MENU"
+
+[node name="Main_Menu" type="Control" parent="UI_Controller"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="UI_Controller/Main_Menu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -125.0
+offset_top = -100.0
+offset_right = 125.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CloseMainMenuButton" type="Button" parent="UI_Controller/Main_Menu/Panel"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 23.0
+offset_bottom = 36.0
+text = "X"
+
+[node name="HFlowContainer" type="HFlowContainer" parent="UI_Controller/Main_Menu/Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -96.0
+offset_top = 5.0
+offset_right = 97.0
+offset_bottom = 85.0
+grow_horizontal = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="UI_Controller/Main_Menu/Panel/HFlowContainer"]
+layout_mode = 2
+text = "MAIN MENU"
+label_settings = SubResource("LabelSettings_f6xvp")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PresetPathsCheckButton" type="CheckButton" parent="UI_Controller/Main_Menu/Panel/HFlowContainer"]
+layout_mode = 2
+text = "Preset Paths Mode"
+
+[node name="ResetButton" type="Button" parent="UI_Controller/Main_Menu/Panel/HFlowContainer"]
+layout_mode = 2
+text = "Reset Scene"
+
+[node name="ExitButton" type="Button" parent="UI_Controller/Main_Menu/Panel/HFlowContainer"]
+layout_mode = 2
+text = "Exit Application
+"
+
+[node name="PresetPathsControls" type="Control" parent="UI_Controller" groups=["PresetPathControls"]]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("7_008bx")
+
+[node name="TurnRightButton" type="Button" parent="UI_Controller/PresetPathsControls"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 479.0
+offset_top = -270.0
+offset_right = 529.0
+offset_bottom = 230.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="TurnLeftButton" type="Button" parent="UI_Controller/PresetPathsControls"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -569.0
+offset_top = -270.0
+offset_right = -519.0
+offset_bottom = 230.0
+grow_vertical = 2
+
+[connection signal="pressed" from="UI_Controller/MainMenuButton" to="UI_Controller" method="_on_main_menu_button_pressed"]
+[connection signal="pressed" from="UI_Controller/Main_Menu/Panel/CloseMainMenuButton" to="UI_Controller" method="_on_close_main_menu_button_pressed"]
+[connection signal="toggled" from="UI_Controller/Main_Menu/Panel/HFlowContainer/PresetPathsCheckButton" to="UI_Controller" method="_on_preset_paths_check_button_toggled"]
+[connection signal="pressed" from="UI_Controller/Main_Menu/Panel/HFlowContainer/ResetButton" to="UI_Controller" method="_on_reset_button_pressed"]
+[connection signal="pressed" from="UI_Controller/Main_Menu/Panel/HFlowContainer/ExitButton" to="UI_Controller" method="_on_exit_button_pressed"]
+[connection signal="button_down" from="UI_Controller/PresetPathsControls/TurnRightButton" to="UI_Controller/PresetPathsControls" method="_on_turn_right_button_button_down"]
+[connection signal="button_up" from="UI_Controller/PresetPathsControls/TurnRightButton" to="UI_Controller/PresetPathsControls" method="_on_turn_right_button_button_up"]
+[connection signal="button_down" from="UI_Controller/PresetPathsControls/TurnLeftButton" to="UI_Controller/PresetPathsControls" method="_on_turn_left_button_button_down"]
+[connection signal="button_up" from="UI_Controller/PresetPathsControls/TurnLeftButton" to="UI_Controller/PresetPathsControls" method="_on_turn_left_button_button_up"]
