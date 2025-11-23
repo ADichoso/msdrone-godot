@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bf01uurk2v7er"]
 
-[ext_resource type="Script" uid="uid://chh1gxful6be7" path="res://scenes/drone_follow_3d.gd" id="1_v743q"]
+[ext_resource type="Script" uid="uid://chh1gxful6be7" path="res://scripts/drone_follow_3d.gd" id="1_v743q"]
 
 [node name="DroneFollow3D" type="PathFollow3D"]
 transform = Transform3D(0.9995209, 0, -0.030810855, 0, 1, 0, 0.030810855, 0, 0.9995209, 0, 0, 0)

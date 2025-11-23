@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://blug123dul1lr"]
+
+[ext_resource type="PackedScene" uid="uid://c0ngp1gf8beyj" path="res://scenes/camera_controller.tscn" id="1_4vysf"]
+[ext_resource type="Script" uid="uid://df5tl6vkg772o" path="res://scenes/Player/player_camera_controller.gd" id="2_6npxg"]
+
+[node name="Player_Camera_Controller" node_paths=PackedStringArray("Target") instance=ExtResource("1_4vysf")]
+script = ExtResource("2_6npxg")
+Target = NodePath("Target")

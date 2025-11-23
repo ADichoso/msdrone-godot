@@ -6,7 +6,6 @@ signal assign_target(waypoint)
 func _ready() -> void:
 	pass # Replace with function body.
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	pass
@@ -15,5 +14,5 @@ func _process(_delta: float) -> void:
 func _on_area_3d_input_event(camera: Node, event: InputEvent, event_position: Vector3, normal: Vector3, shape_idx: int) -> void:
 	#When this object is clicked, move the Drone's Path Follow to the location of the waypoint
 	if event is InputEventMouseButton and event.is_pressed():
-		emit_signal("assign_target", self)
+		emit_signal("assign_target", self.progress)
 		print("Clicked a Waypoint!")

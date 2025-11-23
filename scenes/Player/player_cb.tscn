@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://d124risoxucn4"]
+
+[ext_resource type="Script" uid="uid://pc4a3mrfppvl" path="res://scenes/Player/player_cb.gd" id="1_vynuc"]
+[ext_resource type="PackedScene" uid="uid://blug123dul1lr" path="res://scenes/Player/player_camera_controller.tscn" id="2_vynuc"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_uj5gi"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_uj5gi"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_vynuc"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+
+[node name="Player_CB" type="CharacterBody3D"]
+script = ExtResource("1_vynuc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_uj5gi")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_uj5gi")
+
+[node name="Player_Camera_Controller" parent="." instance=ExtResource("2_vynuc")]
+top_level = false
+
+[node name="Target" parent="Player_Camera_Controller" index="0"]
+transform = Transform3D(1, 0, 0, 0, 0.9887563, 0.14953533, 0, -0.14953533, 0.9887563, 0, 0.5018457, -0.46445242)
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_vynuc")
+
+[editable path="Player_Camera_Controller"]

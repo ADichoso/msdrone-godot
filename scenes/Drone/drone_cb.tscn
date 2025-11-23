@@ -1,17 +1,53 @@
-[gd_scene load_steps=4 format=3 uid="uid://cin0ld53v2pel"]
+[gd_scene load_steps=6 format=3 uid="uid://cin0ld53v2pel"]
 
 [ext_resource type="Script" uid="uid://yovbe62fbtt" path="res://scripts/drone_cb3d.gd" id="1_v0w56"]
 [ext_resource type="PackedScene" uid="uid://bft3r4pbwxjj6" path="res://scenes/Drone/drone_mesh.tscn" id="2_v0w56"]
+[ext_resource type="PackedScene" uid="uid://c0ngp1gf8beyj" path="res://scenes/camera_controller.tscn" id="3_wttk7"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_sugp2"]
 radius = 0.5753299
 
-[node name="Drone_CB" type="CharacterBody3D"]
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_v0w56"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:PRESET_PATHS_MODE")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:rotation")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath(".:State")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath("Camera_Controller:top_level")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+properties/5/path = NodePath("Camera_Controller:position")
+properties/5/spawn = true
+properties/5/replication_mode = 1
+properties/6/path = NodePath("Camera_Controller:rotation")
+properties/6/spawn = true
+properties/6/replication_mode = 1
+properties/7/path = NodePath("Camera_Controller/Target:position")
+properties/7/spawn = true
+properties/7/replication_mode = 1
+properties/8/path = NodePath("Camera_Controller/Target:rotation")
+properties/8/spawn = true
+properties/8/replication_mode = 1
+properties/9/path = NodePath("Camera_Controller/Target/Camera3D:position")
+properties/9/spawn = true
+properties/9/replication_mode = 1
+properties/10/path = NodePath("Camera_Controller/Target/Camera3D:rotation")
+properties/10/spawn = true
+properties/10/replication_mode = 1
+
+[node name="Drone_CB" type="CharacterBody3D" node_paths=PackedStringArray("Camera")]
 transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 0, 0)
 script = ExtResource("1_v0w56")
 MOVEMENT_SPEED = 2.5
 ELEVATION_SPEED = 0.5
-PRESET_PATHS_MODE = true
+Camera = NodePath("Camera_Controller/Target/Camera3D")
 
 [node name="Drone_Mesh" parent="." instance=ExtResource("2_v0w56")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
@@ -19,11 +55,9 @@ transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_sugp2")
 
-[node name="Camera_Controller" type="Node3D" parent="."]
-top_level = true
+[node name="Camera_Controller" parent="." instance=ExtResource("3_wttk7")]
 
-[node name="Target" type="Node3D" parent="Camera_Controller"]
-transform = Transform3D(1, 0, 0, 0, 0.9887563, 0.14953533, 0, -0.14953533, 0.9887563, 0, -0.063, -0.247)
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_v0w56")
 
-[node name="Camera3D" type="Camera3D" parent="Camera_Controller/Target"]
-transform = Transform3D(1, 0, 0, 0, 1.0000001, 0, 0, 0, 1.0000001, 0, 0, 0)
+[editable path="Camera_Controller"]

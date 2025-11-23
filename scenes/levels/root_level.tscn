@@ -1,12 +1,16 @@
-[gd_scene load_steps=12 format=3 uid="uid://c347f64scck6e"]
+[gd_scene load_steps=18 format=3 uid="uid://c347f64scck6e"]
 
 [ext_resource type="PackedScene" uid="uid://cin0ld53v2pel" path="res://scenes/Drone/drone_cb.tscn" id="1_5bocx"]
+[ext_resource type="Script" uid="uid://biahq6rkrihce" path="res://scenes/levels/root_level.gd" id="1_13jcy"]
+[ext_resource type="PackedScene" uid="uid://d124risoxucn4" path="res://scenes/Player/player_cb.tscn" id="1_b1hsc"]
 [ext_resource type="Environment" uid="uid://ckhjjjq86fqvg" path="res://resources/root_level_world_env.tres" id="1_bjr41"]
 [ext_resource type="Material" uid="uid://na7e0kr2q7ow" path="res://resources/materials/floor_mat3d.tres" id="2_ujr3r"]
-[ext_resource type="PackedScene" uid="uid://bf01uurk2v7er" path="res://scenes/drone_follow_3d.tscn" id="4_g2hoa"]
+[ext_resource type="PackedScene" uid="uid://bf01uurk2v7er" path="res://scenes/Drone/drone_follow_3d.tscn" id="4_g2hoa"]
 [ext_resource type="PackedScene" uid="uid://gjmecnvwa8r5" path="res://scenes/Waypoint.tscn" id="4_ia20a"]
 [ext_resource type="Script" uid="uid://chb8rehhntyjc" path="res://scenes/levels/ui_controller.gd" id="6_f6xvp"]
 [ext_resource type="Script" uid="uid://br4yfwnru04fx" path="res://scenes/levels/preset_paths_controls.gd" id="7_008bx"]
+[ext_resource type="PackedScene" uid="uid://b2rag43atvvgy" path="res://scenes/Multiplayer/start_panel.tscn" id="8_4muxg"]
+[ext_resource type="Script" uid="uid://c5mjyjslghca5" path="res://scenes/Multiplayer/multiplayer_spawner.gd" id="9_a1ys2"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_docf2"]
 material = ExtResource("2_ujr3r")
@@ -23,14 +27,30 @@ _data = {
 }
 point_count = 3
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_13jcy"]
+properties/0/path = NodePath(".:visible")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+
 [sub_resource type="LabelSettings" id="LabelSettings_f6xvp"]
 font_size = 32
 
-[node name="RootLevel" type="Node3D"]
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_xwtem"]
+properties/0/path = NodePath("Main_Menu/Panel/HFlowContainer/PresetPathsCheckButton:toggle_mode")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("Main_Menu/Panel/HFlowContainer/PresetPathsCheckButton:button_pressed")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("PresetPathsControls/TurnRightButton:button_pressed")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath("PresetPathsControls/TurnLeftButton:button_pressed")
+properties/3/spawn = true
+properties/3/replication_mode = 1
 
-[node name="Drone_CB" parent="." instance=ExtResource("1_5bocx")]
-transform = Transform3D(0.999996, 0, -1.8626451e-09, 0, 1, 0, 1.8626451e-09, 0, 0.999996, 0, 0, 0)
-PRESET_PATHS_MODE = false
+[node name="RootLevel" type="Node3D"]
+script = ExtResource("1_13jcy")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("1_bjr41")
@@ -86,6 +106,9 @@ loop = false
 [node name="Waypoint" parent="Path3D" instance=ExtResource("4_ia20a")]
 transform = Transform3D(0.9995229, 0, -0.030810919, 0, 1, 0, 0.030810919, 0, 0.9995229, 0, 0, 0)
 loop = false
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="Path3D"]
+replication_config = SubResource("SceneReplicationConfig_13jcy")
 
 [node name="UI_Controller" type="Control" parent="." groups=["UIController"]]
 layout_mode = 3
@@ -146,7 +169,7 @@ anchor_right = 0.5
 offset_left = -96.0
 offset_top = 5.0
 offset_right = 97.0
-offset_bottom = 85.0
+offset_bottom = 155.0
 grow_horizontal = 2
 alignment = 1
 
@@ -200,6 +223,21 @@ offset_top = -270.0
 offset_right = -519.0
 offset_bottom = 230.0
 grow_vertical = 2
+
+[node name="StartPanel" parent="UI_Controller" instance=ExtResource("8_4muxg")]
+layout_mode = 1
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="UI_Controller"]
+replication_config = SubResource("SceneReplicationConfig_xwtem")
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("uid://cin0ld53v2pel")
+spawn_path = NodePath("..")
+script = ExtResource("9_a1ys2")
+network_player = ExtResource("1_5bocx")
+
+[node name="Player_CB" parent="." instance=ExtResource("1_b1hsc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.7418935, 0.33498555, 3.8054566)
 
 [connection signal="pressed" from="UI_Controller/MainMenuButton" to="UI_Controller" method="_on_main_menu_button_pressed"]
 [connection signal="pressed" from="UI_Controller/Main_Menu/Panel/CloseMainMenuButton" to="UI_Controller" method="_on_close_main_menu_button_pressed"]
