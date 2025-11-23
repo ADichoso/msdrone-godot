@@ -17,6 +17,9 @@ func _process(_delta: float) -> void:
 func _on_main_menu_button_pressed() -> void:
 	if not $Main_Menu.visible:
 		$Main_Menu.visible = true
+		if is_drone:
+			$Main_Menu/Panel/HFlowContainer/PresetPathsCheckButton.visible = false
+			$Main_Menu/Panel/HFlowContainer/ResetButton.visible = false
 
 func _on_close_main_menu_button_pressed() -> void:
 	if $Main_Menu.visible:
